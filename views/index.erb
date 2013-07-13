@@ -1,0 +1,65 @@
+<script type='text/x-handlebars' data-template-name="application">
+  <div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+      <div class="container">
+        {{#linkTo 'index' class="brand"}}emberreddit{{/linkTo}}
+
+          <ul class="nav" id="main-menu-left">
+            <li class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#">subreddits <b class="caret"></b></a>
+              <ul class="dropdown-menu" id="swatch-menu">
+              {{#each subreddit in subreddits}}
+                <li>{{#linkTo 'subreddit' subreddit}}{{subreddit.title}}{{/linkTo}}</li>
+              {{/each}}
+              </ul>
+            </li>
+            <li>
+              <a href="http://www.reddit.com/r/aww/.json?.jsonp=?">.json?.jsonp=?</a>
+            </li>
+            <li>
+              <a href="http://localhost:3000">Reload</a>
+          </ul>
+
+      </div>
+    </div>
+  </div>
+
+   <div class="container">
+    {{outlet}}
+   </div>
+ </script>
+
+<script type="text/x-handlebars" data-template-name="subreddit">
+  <h2 class='subreddit'>{{title}}</h2>
+  {{outlet}}
+
+  <section class='reddit-links'>
+    {{#each link in links}}
+      <div class='row reddit-link'>
+        <div class="span1">
+        {{#if link.thumbnailUrl}}
+            {{#linkTo 'link' link}}<img {{bindAttr src="link.thumbnailUrl"}}>{{/linkTo}}
+        {{/if}}
+        </div>
+        <div class="span7">
+          {{#linkTo 'link' link}}{{link.title}}{{/linkTo}}
+          <span class='domain'>({{link.domain}})</span>
+        </div>
+      </div>
+    {{/each}}
+  </section>
+</script>
+
+<script type="text/x-handlebars" data-template-name="link">
+  <div class='link-view'>
+    {{#linkTo 'subreddit' model.subreddit class="close"}}close{{/linkTo}}
+    <h1>{{title}}</h1>
+    {{#if image}}
+      <center><img {{bindAttr src="imageUrl"}}></center>
+    {{else}}
+      {{#if embed}}
+        {{{embed}}}
+      {{/if}}
+    {{/if}}
+  </div>
+</script>
