@@ -1,4 +1,4 @@
-### emberreddit
+### emberreddit-http
 
 A small example of how to use Ember.js without using Ember Data.
 
